@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title> Avatar Generator</title>
+<title>Live Avatar Generator</title>
 
 <!-- کتابخانه‌ها -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
@@ -13,7 +13,7 @@
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen p-6">
 
-  <h1 class="text-2xl font-bold mb-4"> Avatar Generator</h1>
+  <h1 class="text-2xl font-bold mb-4">Live Avatar Generator</h1>
 
   <input id="textInput" type="text" placeholder="Type here..." class="border p-2 rounded mb-4 w-64" oninput="generateAvatar(this.value)" />
 
@@ -35,12 +35,10 @@
 
     const skinPalette = ['#FFD1A4', '#FFBC9A', '#E0AC69', '#C68642', '#8D5524'];
     const hairPalette = ['#2E1A1A', '#3B2F2F', '#5A4033', '#A0522D', '#D2B48C'];
-    const beardPalette = ['#2E1A1A', '#3B2F2F', '#5A4033'];
     const bgPalette = ['#FADADD', '#D0BCFF', '#C2E7DA', '#E0C3FC', '#FFE29A'];
 
     const skinColor = skinPalette[parseInt(hash[0], 16) % skinPalette.length];
     const hairColor = hairPalette[parseInt(hash[1], 16) % hairPalette.length];
-    const beardColor = beardPalette[parseInt(hash[2], 16) % beardPalette.length];
     const bgColor = bgPalette[parseInt(hash[3], 16) % bgPalette.length];
 
     const expressionIndex = parseInt(hash[4], 16) % 3;
@@ -79,7 +77,6 @@
   ${glasses}
   <path d="M50,50 Q52,55 50,60" stroke="black" stroke-width="2" fill="none"/>
   ${mouth}
-  <path d="M35,70 Q50,90 65,70" stroke="${beardColor}" stroke-width="4" fill="none"/>
 </svg>`;
 
     document.getElementById('avatar').innerHTML = svg;
