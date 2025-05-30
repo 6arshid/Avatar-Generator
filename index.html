@@ -3,14 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Live Avatar Generator</title>
+<title> Avatar Generator</title>
+
+<!-- کتابخانه‌ها -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvg@3.0.9/lib/umd.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen p-6">
 
-  <h1 class="text-2xl font-bold mb-4">Avatar Generator</h1>
+  <h1 class="text-2xl font-bold mb-4"> Avatar Generator</h1>
+
   <input id="textInput" type="text" placeholder="Type here..." class="border p-2 rounded mb-4 w-64" oninput="generateAvatar(this.value)" />
 
   <div id="avatar" class="mt-6"></div>
@@ -47,10 +51,21 @@
     ];
     const mouth = mouthShapes[expressionIndex];
 
+    // Random glasses
     const hasGlasses = parseInt(hash[5], 16) % 3 === 0;
     const glasses = hasGlasses
       ? '<rect x="27" y="40" width="16" height="8" rx="2" fill="black"/><rect x="57" y="40" width="16" height="8" rx="2" fill="black"/><line x1="43" y1="44" x2="57" y2="44" stroke="black" stroke-width="2"/>'
       : '';
+
+    // Hair styles
+    const hairStyles = [
+      '<rect x="20" y="10" width="60" height="15" rx="2" fill="' + hairColor + '"/>',  // Flat top
+      '<path d="M20,25 Q30,5 50,20 Q70,5 80,25 Q65,15 50,15 Q35,15 20,25" fill="' + hairColor + '"/>',  // Short wavy
+      '<path d="M20,25 Q50,-5 80,25 Q70,15 50,20 Q30,15 20,25" fill="' + hairColor + '"/>',  // Long fringe
+      '<path d="M20,25 L30,10 L40,25 L50,10 L60,25 L70,10 L80,25 Q70,15 50,15 Q30,15 20,25" fill="' + hairColor + '"/>',  // Spiky
+      '<circle cx="50" cy="20" r="20" fill="' + hairColor + '"/>'  // Afro
+    ];
+    const hair = hairStyles[parseInt(hash[1], 16) % hairStyles.length];
 
     const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
@@ -58,7 +73,7 @@
   <circle cx="50" cy="50" r="30" fill="${skinColor}" />
   <ellipse cx="20" cy="50" rx="6" ry="10" fill="${skinColor}" />
   <ellipse cx="80" cy="50" rx="6" ry="10" fill="${skinColor}" />
-  <path d="M20,25 Q50,0 80,25 Q65,15 50,15 Q35,15 20,25" fill="${hairColor}"/>
+  ${hair}
   <ellipse cx="35" cy="45" rx="5" ry="7" fill="black" />
   <ellipse cx="65" cy="45" rx="5" ry="7" fill="black" />
   ${glasses}
